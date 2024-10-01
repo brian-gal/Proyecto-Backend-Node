@@ -1,5 +1,4 @@
-import { products } from "../data/products.js";
-import { carts } from "../data/products.js";
+import { products, carts } from "../data/data.js";
 
 // Middleware para validar la creación de un producto
 export const validateProduct = (req, res, next) => {
@@ -7,12 +6,12 @@ export const validateProduct = (req, res, next) => {
 
     // Validar campos requeridos
     if (!title || !description || !code || !price || !stock || !category) {
-        return res.status(400).send({ error: 'Faltan campos requeridos' });
+        return res.status(404).send({ error: 'Faltan campos requeridos' });
     }
 
     // Verificar que price y stock sean números
     if (isNaN(price) || isNaN(stock)) {
-        return res.status(400).send({ error: 'El precio y el stock deben ser números' });
+        return res.status(404).send({ error: 'El precio y el stock deben ser números' });
     }
 
     next();
@@ -23,16 +22,21 @@ export const validateUpdateProduct = (req, res, next) => {
     const { price, stock } = req.body;
 
     if (!Object.keys(req.body).length) {
-        return res.status(400).send({ error: 'No se han proporcionado campos para actualizar' });
+        return res.status(404).send({ error: 'No se han proporcionado campos para actualizar' });
     }
 
     // Verificar que price y stock sean números si se proporcionan
     if (price !== undefined && isNaN(price)) {
-        return res.status(400).send({ error: 'El precio debe ser un número' });
+        return res.status(404).send({ error: 'El precio debe ser un número' });
     }
 
     if (stock !== undefined && isNaN(stock)) {
-        return res.status(400).send({ error: 'El stock debe ser un número' });
+        return res.status(404).send({ error: 'El stock debe ser un número' });
+    }
+
+    // Verificar si se intenta actualizar 'id'
+    if (req.body.hasOwnProperty('status') || req.body.hasOwnProperty('id')) {
+        return res.status(404).send({ error: 'No se puede actualizar el campo id' });
     }
 
     next();

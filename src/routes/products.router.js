@@ -1,8 +1,9 @@
 import { Router } from 'express';
-import { products } from "../data/products.js";
+import { ProductManager, products } from "../data/data.js";
 import { validateProduct, validateProductExists, validateUpdateProduct } from '../middleware/middleware.js';
 
 const router = Router();
+const productManager = new ProductManager('./src/data/products.json');
 
 // Obtener todos los productos o los productos de un determinado límite
 router.get('/', (req, res) => {
@@ -22,7 +23,7 @@ router.get('/:id', validateProductExists, (req, res) => {
 });
 
 // Crear un nuevo producto
-router.post('/', validateProduct, (req, res) => {
+router.post('/', validateProduct, async (req, res) => {
     const { title, description, code, price, stock, category } = req.body;
     const maxId = products.length > 0 ? Math.max(...products.map(element => +element.id)) : 0;
 
@@ -38,45 +39,38 @@ router.post('/', validateProduct, (req, res) => {
     };
 
     products.push(newProduct);
+
+    await productManager.editProduct(products);
     res.status(200).send({ error: null, data: newProduct });
 });
 
 // Actualizar un producto
-router.put('/:id', validateUpdateProduct, validateProductExists, (req, res) => {
+router.put('/:id', validateUpdateProduct, validateProductExists, async (req, res) => {
     const id = parseInt(req.params.id);
     const product = products.find(product => product.id === id);
 
-    const { title, description, code, price, stock, category } = req.body;
+    const updates = req.body; // Obtén todos los datos de la solicitud
 
-    //solo actualiza los campos que se han proporcionado
-    if (req.body.hasOwnProperty('title')) {
-        product.title = title;
-    }
-    if (req.body.hasOwnProperty('description')) {
-        product.description = description;
-    }
-    if (req.body.hasOwnProperty('code')) {
-        product.code = code;
-    }
-    if (req.body.hasOwnProperty('price')) {
-        product.price = parseFloat(price);
-    }
-    if (req.body.hasOwnProperty('stock')) {
-        product.stock = parseInt(stock);
-    }
-    if (req.body.hasOwnProperty('category')) {
-        product.category = category;
+    // Itera sobre las propiedades del objeto updates
+    for (const key in updates) {
+        if (updates.hasOwnProperty(key)) {
+            // Actualiza directamente las propiedades del producto
+            product[key] = updates[key];
+        }
     }
 
+    await productManager.editProduct(products);
     res.status(200).send({ error: null, data: product });
 });
 
 // Eliminar un producto
-router.delete('/:id', validateProductExists, (req, res) => {
+router.delete('/:id', validateProductExists, async (req, res) => {
     const id = parseInt(req.params.id);
     const index = products.findIndex(product => product.id === id);
 
     products.splice(index, 1);
+
+    await productManager.editProduct(products);
     res.status(200).send({ error: null, data: products });
 });
 

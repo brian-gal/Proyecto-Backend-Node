@@ -1,8 +1,10 @@
 import { Router } from 'express';
-import { carts } from "../data/products.js";
+import { carts, ProductManager } from "../data/data.js";
 import { validateCart, validateProductExists } from '../middleware/middleware.js';
 
 const router = Router();
+
+const cartsManager = new ProductManager('./src/data/carts.json');
 
 // Obtener todos los carritos
 router.get('/', (req, res) => {
@@ -17,7 +19,7 @@ router.get('/:cid', validateCart, (req, res) => {
 });
 
 // Crear un nuevo carrito
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
     const maxId = (carts.length > 0) ? Math.max(...carts.map(element => +element.id)) : 0;
 
     const newCart = {
@@ -25,11 +27,13 @@ router.post('/', (req, res) => {
         products: []
     };
     carts.push(newCart);
+
+    await cartsManager.editProduct(carts);
     res.status(200).send({ error: null, data: newCart });
 });
 
 // Agregar un elemento al carrito
-router.post('/:cid/product/:id', validateCart, validateProductExists, (req, res) => {
+router.post('/:cid/product/:id', validateCart, validateProductExists, async (req, res) => {
     const cartId = parseInt(req.params.cid);
     const cart = carts.find(cart => cart.id === cartId);
     const productId = parseInt(req.params.id);
@@ -47,6 +51,7 @@ router.post('/:cid/product/:id', validateCart, validateProductExists, (req, res)
         cart.products.push(newProduct);
     }
 
+    await cartsManager.editProduct(carts);
     res.status(200).send({ error: null, data: cart });
 });
 

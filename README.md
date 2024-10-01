@@ -1,6 +1,7 @@
 # Proyecto de API de Productos y Carritos
 
-Este proyecto es una API desarrollada con **Express.js** que permite gestionar productos y carritos de compra.
+Este proyecto es una API desarrollada con **Express.js** que permite gestionar productos y carritos de compra. Ademas utilizamos **File System** para almacenar los datos en un archivo JSON y cuando inicia el servidor se lee el archivo y lo almacena en memoria global, para poder acceder a los datos sin tener que leer de nuevo el archivo cada vez. Sin embargo va actualizando los JSON a medida que se realiza una edición.
+Por otro lado, el servidor también utiliza middleware para validar las peticiones y asegurar que solo se puedan realizar acciones permitidas. 
 
 ## Configuración
 
