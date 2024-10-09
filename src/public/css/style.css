@@ -1,0 +1,44 @@
+.container {
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f8f9fa;
+    /* Fondo claro */
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    /* Sombra sutil */
+}
+
+.title {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table th,
+.table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+
+.table th {
+    background-color: #007bff;
+    color: white;
+}
+
+.product-row:hover {
+    background-color: #f1f1f1;
+}
+
+.available {
+    color: green;
+}
+
+.unavailable {
+    color: red;
+}

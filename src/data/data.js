@@ -9,9 +9,8 @@ export class ProductManager {
     async init() {
         try {
             await fs.promises.access(this.file);
-            console.log('El archivo de productos existe');
         } catch (err) {
-            console.log('El archivo de productos NO existe');
+            console.log(`El archivo de ${this.file} No existe y fue creado`);
             await fs.promises.writeFile(this.file, JSON.stringify([]));
         }
     }
@@ -25,7 +24,7 @@ export class ProductManager {
     //obtiene un parametro que hace referencia a el array global en cuestion de esta forma reutilizamos el mismo metodo para actualizar
     async editProduct(data) {
         await fs.promises.writeFile(this.file, JSON.stringify(data));
-        console.log('Producto agregado');
+        console.log(`${data} agregado`);
     }
 
     //obtiene los datos completos
