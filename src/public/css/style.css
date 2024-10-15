@@ -1,11 +1,26 @@
-.container {
-    margin: 0 auto;
+.containerDiv {
+    margin: 0 10px;
     padding: 20px;
     background-color: #f8f9fa;
     /* Fondo claro */
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     /* Sombra sutil */
+}
+
+.btn-group {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 30px 0;
+}
+
+
+
+.btn-group-vertical>.btn,
+.btn-group>.btn {
+    position: relative;
+    flex: inherit;
 }
 
 .title {

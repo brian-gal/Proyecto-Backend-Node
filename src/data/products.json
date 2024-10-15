@@ -1,1 +1,1 @@
-[{"id":1,"title":"Producto 1","description":"Descripción del Producto 1","code":"005","price":10,"status":true,"stock":2,"category":"Categoría 1"},{"id":2,"title":"Producto 7","description":"Descripción del Producto 7","code":"005","price":10,"status":true,"stock":20,"category":"Categoría 7"}]
+[{"id":7,"title":"prueba4","description":"b","code":"8929","price":500,"status":true,"stock":20,"category":"hola"},{"id":8,"title":"prueba5","description":"a","code":"8929","price":500,"status":true,"stock":20,"category":"hola"}]
