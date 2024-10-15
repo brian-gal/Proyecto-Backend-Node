@@ -46,3 +46,13 @@ El servidor se ejecuta en el puerto `8080`. Puedes cambiar el puerto en el archi
 
 - **POST** `/api/cart/:cid/product/:id`  
   Agrega un producto a un carrito específico por ID de carrito y ID de producto.
+
+## Rutas de Vistas
+
+- **GET** `/views/home`  
+  Renderiza la vista de la página de inicio con los productos existentes hasta el momento.
+
+- **GET** `/views/realTimeProducts`  
+  Renderiza la vista de la página de realTimeProducts con los productos, ademas de actualizarce en tiempo real los productos. Para lograrlo utiliza **Socket.IO** en donde emite un evento cada vez que se crea un producto o elimina un producto y de esta manera se actualiza el cliente en tiempo real.
+
+
