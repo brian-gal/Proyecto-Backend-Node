@@ -4,7 +4,7 @@ import { validateCart, validateProductExists } from '../middleware/middleware.js
 
 const router = Router();
 
-const cartsManager = new ProductManager('./src/data/carts.json');
+const cartsManager = new ProductManager('./src/data/database/carts.json');
 
 // Obtener todos los carritos
 router.get('/', (req, res) => {

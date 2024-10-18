@@ -14,5 +14,12 @@
     "express": "^4.21.0",
     "express-handlebars": "^8.0.1",
     "socket.io": "^4.8.0"
-  }
+  },
+  "nodemonConfig": {
+  "ignore": [
+    "src/data/database/*",
+    "**/*.json"
+  ]
+}
+
 }

@@ -3,7 +3,7 @@ import { ProductManager, products } from "../data/data.js";
 import { validateProduct, validateProductExists, validateUpdateProduct } from '../middleware/middleware.js';
 
 const router = Router();
-const productManager = new ProductManager('./src/data/products.json');
+const productManager = new ProductManager('./src/data/database/products.json');
 
 // Obtener todos los productos o los productos de un determinado límite
 router.get('/', (req, res) => {
@@ -40,7 +40,7 @@ router.post('/', validateProduct, async (req, res) => {
 
     products.push(newProduct);
 
-    await productManager.editProduct(products);
+    /* await productManager.editProduct(products); */
 
     //emite a todos para crear el producto
     const socketServer = req.app.get('socketServer');

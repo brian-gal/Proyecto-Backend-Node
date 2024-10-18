@@ -33,11 +33,11 @@ export class ProductManager {
 }
 
 // actualiza el array global de productos con los datos del json
-const productManager = new ProductManager('./src/data/products.json');
+const productManager = new ProductManager('./src/data/database/products.json');
 await productManager.init();
 export const products = await productManager.getProducts();
 
 //actualiza el array global de carritos con los datos del json
-const cartsManager = new ProductManager('./src/data/carts.json');
+const cartsManager = new ProductManager('./src/data/database/carts.json');
 await cartsManager.init();
 export const carts = await cartsManager.getProducts();
