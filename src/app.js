@@ -5,7 +5,8 @@ import config from './config/config.js';
 import productsRouter from './routes/products.router.js';
 import cartsRouter from './routes/cart.router.js';
 import viewsRouter from './routes/views.router.js';
-import initSocket from './sockets.js';
+import { Server } from 'socket.io';
+
 
 const app = express();
 
@@ -30,8 +31,11 @@ app.use('/static', express.static(`${config.DIRNAME}/public`));
 //corriendo el servidor
 const httpServer = app.listen(config.PORT, () => {
     console.log(`Servidor corriendo en el puerto ${config.PORT}`);
-
-    const socketServer = initSocket(httpServer);
-    app.set('socketServer', socketServer);
 });
 
+const socketServer = new Server(httpServer);
+app.set('socketServer', socketServer);
+
+socketServer.on('connection', (socket) => {
+    console.log(`Nuevo cliente conectado con id ${socket.id}`);
+});

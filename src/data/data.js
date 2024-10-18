@@ -24,7 +24,6 @@ export class ProductManager {
     //obtiene un parametro que hace referencia a el array global en cuestion de esta forma reutilizamos el mismo metodo para actualizar
     async editProduct(data) {
         await fs.promises.writeFile(this.file, JSON.stringify(data));
-        console.log(`${data} agregado`);
     }
 
     //obtiene los datos completos

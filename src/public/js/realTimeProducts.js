@@ -7,8 +7,18 @@ socket.on('connect', () => {
     console.log(`Conectado al servidor socket.io ${url}`);
 });
 
+// escucha el evento de eliminación de producto
+socket.on('deleteProduct', (productId) => {
+    const productRow = document.querySelector(`tr[data-id="${productId}"]`);
+    if (productRow) {
+        productRow.remove();
+    } else {
+        console.error(`No se encontró la fila para el producto con ID ${productId}`);
+    }
+});
+
 // escucha el evento de creación de producto
-socket.on('productCreated', (newProduct) => {
+socket.on('createProduct', (newProduct) => {
     const tbody = document.querySelector('tbody');
 
     // Crea una nueva fila con el producto recibido
@@ -37,16 +47,6 @@ socket.on('productCreated', (newProduct) => {
     tbody.appendChild(newRow);
 });
 
-// escucha el evento de eliminación de producto
-socket.on('productDeleted', (productId) => {
-    const productRow = document.querySelector(`tr[data-id="${productId}"]`);
-    if (productRow) {
-        productRow.remove();
-    } else {
-        console.error(`No se encontró la fila para el producto con ID ${productId}`);
-    }
-});
-
 // boton para eliminar un producto
 const tbody = document.querySelector('tbody');
 tbody.addEventListener('click', async (event) => {
@@ -60,7 +60,7 @@ tbody.addEventListener('click', async (event) => {
             });
 
             if (response.ok) {
-                socket.emit('deleteProduct', productId);
+                console.log("producto eliminado");
             } else {
                 console.error('Error al eliminar el producto:', response.statusText);
             }
@@ -103,7 +103,7 @@ form.addEventListener('submit', async (e) => {
         });
 
         if (response.ok) {
-            socket.emit('createProduct', newProduct);
+            console.log("producto creado");
         } else {
             console.error('Error al crear el producto:', response.statusText);
         }
@@ -118,3 +118,4 @@ form.addEventListener('submit', async (e) => {
     // Restablece el formulario
     form.reset();
 });
+

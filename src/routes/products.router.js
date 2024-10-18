@@ -41,6 +41,11 @@ router.post('/', validateProduct, async (req, res) => {
     products.push(newProduct);
 
     await productManager.editProduct(products);
+
+    //emite a todos para crear el producto
+    const socketServer = req.app.get('socketServer');
+    socketServer.emit('createProduct', newProduct);
+
     res.status(200).send({ error: null, data: newProduct });
 });
 
@@ -71,6 +76,11 @@ router.delete('/:id', validateProductExists, async (req, res) => {
     products.splice(index, 1);
 
     await productManager.editProduct(products);
+
+    //emite a todos para borrar el producto
+    const socketServer = req.app.get('socketServer');
+    socketServer.emit('deleteProduct', id);
+    
     res.status(200).send({ error: null, data: products });
 });
 
