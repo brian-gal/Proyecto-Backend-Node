@@ -40,7 +40,7 @@ router.post('/', validateProduct, async (req, res) => {
 
     products.push(newProduct);
 
-    /* await productManager.editProduct(products); */
+    await productManager.editProduct(products); 
 
     //emite a todos para crear el producto
     const socketServer = req.app.get('socketServer');
