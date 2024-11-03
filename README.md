@@ -1,7 +1,6 @@
 # Proyecto de API de Productos y Carritos
 
-Este proyecto es una API desarrollada con **Express.js** que permite gestionar productos y carritos de compra. Ademas utilizamos **File System** para almacenar los datos en un archivo JSON y cuando inicia el servidor se lee el archivo y lo almacena en memoria global, para poder acceder a los datos sin tener que leer de nuevo el archivo cada vez. Sin embargo va actualizando los JSON a medida que se realiza una edición.
-Por otro lado, el servidor también utiliza middleware para validar las peticiones y asegurar que solo se puedan realizar acciones permitidas. 
+Este proyecto es una API desarrollada con **Express.js** que permite gestionar productos y carritos de compra. 
 
 ## Configuración
 
@@ -12,40 +11,44 @@ El servidor se ejecuta en el puerto `8080`. Puedes cambiar el puerto en el archi
 ### Rutas de Productos
 
 - **GET** `/api/products`  
-  Obtiene todos los productos. Puedes limitar el número de productos devueltos pasando un parámetro de consulta `limit`.  
-  **Ejemplo:** `/api/products?limit=5`
+  Obtiene todos los productos o los productos de un determinado límite. Se pueden aplicar filtros por categoría y stock.
 
 - **GET** `/api/products/:id`  
   Obtiene un producto específico por ID.
 
 - **POST** `/api/products`  
-  Crea un nuevo producto. Requiere los siguientes campos en el cuerpo de la solicitud:
-  - `title` (string)
-  - `description` (string)
-  - `code` (string)
-  - `price` (number)
-  - `stock` (number)
-  - `category` (string)
+  Crea un nuevo producto.
 
 - **PUT** `/api/products/:id`  
-  Actualiza un producto existente por ID. Puedes proporcionar los campos que deseas actualizar.
+  Actualiza un producto específico por ID.
 
 - **DELETE** `/api/products/:id`  
   Elimina un producto específico por ID.
 
 ### Rutas de Carritos
 
-- **GET** `/api/cart`  
-  Obtiene todos los carritos.
+- **GET** `/api/carts`  
+  Obtiene todos los carritos disponibles.
 
-- **GET** `/api/cart/:cid`  
-  Obtiene un carrito específico por ID.
+- **GET** `/api/carts/:cid`  
+  Obtiene un carrito específico por ID y los datos de los productos.
 
-- **POST** `/api/cart`  
+- **POST** `/api/carts`  
   Crea un nuevo carrito.
 
-- **POST** `/api/cart/:cid/product/:id`  
-  Agrega un producto a un carrito específico por ID de carrito y ID de producto.
+- **PUT** `/api/carts/:cid/products/:pid`  
+  Agrega un producto a un carrito específico por ID de carrito y ID de producto. Si el producto ya existe, actualiza su cantidad.
+
+- **DELETE** `/api/carts/:cid/products/:pid`  
+  Elimina un producto específico del carrito por ID de carrito y ID de producto.
+
+- **DELETE** `/api/carts/:cid`  
+  Elimina todos los productos del carrito por ID de carrito.
+
+### Notas Adicionales
+
+- Al solicitar un carrito, los productos se desglosan completamente mediante `populate`, permitiendo acceder a toda la información del producto.
+
 
 ## Rutas de Vistas
 

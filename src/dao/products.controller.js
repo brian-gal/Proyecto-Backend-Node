@@ -1,0 +1,79 @@
+import productsModel from './models/products.model.js';
+import config from '../config/config.js';
+
+class productsController {
+    constructor() {}
+
+    //buscar por id
+    getID = async (id) => {
+        try {
+            return await productsModel.find({ _id: id }).lean();
+        } catch (err) {
+            return err.message;
+        }
+    }
+
+    // Buscar todos los productos y aplicar filtros
+getPaginated = async ({ limit, page, order, category, stock }) => {
+    try {
+        const pageNum = parseInt(page) || 1;
+        const limitNum = parseInt(limit) || config.ITEMS_PER_PAGE;
+        const sortOption = order === 'asc' ? 1 : order === 'desc' ? -1 : null;
+
+        // Filtro y opciones
+        const filter = {};
+        if (category) {
+            filter.category = category;  // Filtrar por categoría
+        }
+        if (stock === 'true') {
+            filter.stock = { $gt: 0 };  // Filtrar por productos disponibles (stock > 0)
+        }
+
+        const options = {
+            limit: limitNum,
+            page: pageNum,
+            lean: true,
+        };
+        if (sortOption !== null) {
+            options.sort = { price: sortOption }; 
+        }
+
+        // Ejecutar la consulta de paginación
+        return await productsModel.paginate(filter, options);
+    } catch (err) {
+        return err.message;
+    }
+};
+
+
+    // agregar un producto
+    add = async (data) => {
+        try {
+            return await productsModel.create(data);
+        } catch (err) {
+            return err.message;
+        }
+    }
+
+    //actualizar un producto
+    update = async (id, updateData) => {
+        try {
+            return await productsModel.findOneAndUpdate({ _id: id }, updateData, { new: true });
+        } catch (err) {
+            return err.message;
+        }
+    }
+
+    // eliminar un producto
+    delete = async (id) => {
+        try {
+            return await productsModel.findOneAndDelete({ _id: id });
+        } catch (err) {
+            return err.message;
+        }
+    }
+
+}
+
+
+export default productsController;

@@ -1,87 +1,63 @@
 import { Router } from 'express';
-import { ProductManager, products } from "../data/data.js";
-import { validateProduct, validateProductExists, validateUpdateProduct } from '../middleware/middleware.js';
+import productsController from '../dao/products.controller.js'; // Asegúrate de importar tu controlador
 
 const router = Router();
-const productManager = new ProductManager('./src/data/database/products.json');
+const controller = new productsController();
 
 // Obtener todos los productos o los productos de un determinado límite
-router.get('/', (req, res) => {
-    const limit = parseInt(req.query.limit);
-    if (limit) {
-        res.status(200).send({ error: null, data: products.slice(0, limit) });
-    } else {
+router.get('/', async (req, res) => {
+    const { limit, page, order, category, stock } = req.query;
+    try {
+        const products = await controller.getPaginated({ limit, page, order, category, stock });
         res.status(200).send({ error: null, data: products });
+    } catch (err) {
+        res.status(500).send({ error: err.message });
     }
 });
 
+
+
 // Obtener los productos por id
-router.get('/:id', validateProductExists, (req, res) => {
-    const id = parseInt(req.params.id);
-    const product = products.find(product => product.id === id);
-    res.status(200).send({ error: null, data: product });
+router.get('/:id', async (req, res) => {
+    const id = req.params.id;
+    try {
+        const product = await controller.getID(id);
+        res.status(200).send({ error: null, data: product });
+    } catch (err) {
+        res.status(500).send({ error: err.message });
+    }
 });
 
 // Crear un nuevo producto
-router.post('/', validateProduct, async (req, res) => {
-    const { title, description, code, price, stock, category } = req.body;
-    const maxId = products.length > 0 ? Math.max(...products.map(element => +element.id)) : 0;
-
-    const newProduct = {
-        id: maxId + 1,
-        title,
-        description,
-        code,
-        price: parseFloat(price),
-        status: true,
-        stock: parseInt(stock),
-        category,
-    };
-
-    products.push(newProduct);
-
-    await productManager.editProduct(products); 
-
-    //emite a todos para crear el producto
-    const socketServer = req.app.get('socketServer');
-    socketServer.emit('createProduct', newProduct);
-
-    res.status(200).send({ error: null, data: newProduct });
+router.post('/', async (req, res) => {
+    try {
+        const data = await controller.add(req.body);
+        res.status(201).send({ error: null, data });
+    } catch (err) {
+        res.status(500).send({ error: err.message });
+    }
 });
 
 // Actualizar un producto
-router.put('/:id', validateUpdateProduct, validateProductExists, async (req, res) => {
-    const id = parseInt(req.params.id);
-    const product = products.find(product => product.id === id);
-
-    const updates = req.body; // Obtén todos los datos de la solicitud
-
-    // Itera sobre las propiedades del objeto updates
-    for (const key in updates) {
-        if (updates.hasOwnProperty(key)) {
-            // Actualiza directamente las propiedades del producto
-            product[key] = updates[key];
-        }
+router.put('/:id', async (req, res) => {
+    const id = req.params.id;
+    try {
+        const data = await controller.update(id, req.body);
+        res.status(200).send({ error: null, data });
+    } catch (err) {
+        res.status(500).send({ error: err.message });
     }
-
-    await productManager.editProduct(products);
-    res.status(200).send({ error: null, data: product });
 });
 
 // Eliminar un producto
-router.delete('/:id', validateProductExists, async (req, res) => {
-    const id = parseInt(req.params.id);
-    const index = products.findIndex(product => product.id === id);
-
-    products.splice(index, 1);
-
-    await productManager.editProduct(products);
-
-    //emite a todos para borrar el producto
-    const socketServer = req.app.get('socketServer');
-    socketServer.emit('deleteProduct', id);
-    
-    res.status(200).send({ error: null, data: products });
+router.delete('/:id', async (req, res) => {
+    const id = req.params.id;
+    try {
+        const data = await controller.delete(id);
+        res.status(200).send({ error: null, data });
+    } catch (err) {
+        res.status(500).send({ error: err.message });
+    }
 });
 
 export default router;
