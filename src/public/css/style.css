@@ -1,0 +1,108 @@
+/* Estilo general para el contenedor principal */
+
+body {
+    background-color: #f2f2f2;
+}
+
+.container {
+    margin-top: 20px;
+    padding: 0 15px; /* Padding lateral */
+}
+
+/* Configuración de la cuadrícula */
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr 3fr; /* Sidebar a la izquierda y contenido principal a la derecha */
+    gap: 20px; /* Espacio entre columnas */
+}
+
+/* Estilo para el div de filtros */
+.filters {
+    display: flex;
+    flex-direction: column;
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    gap: 20px;
+}
+
+.filters h4 {
+    text-align: center;
+}
+
+/* Estilo para el contenedor de productos */
+.products {
+    display: flex;
+    flex-direction: column; /* Organiza el contenido verticalmente */
+}
+
+.products h2 {
+    text-align: center;
+}
+
+/* Estilo para la cuadrícula de productos */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Responsive grid */
+    gap: 20px; /* Espacio entre cada tarjeta de producto */
+    margin-top: 20px;
+}
+
+/* Estilo para las tarjetas de productos */
+.product-card {
+    background-color: #ffffff;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+    padding: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
+
+/* Efecto al pasar el mouse sobre la tarjeta del producto */
+.product-card:hover {
+    transform: scale(1.05);
+}
+
+/* Estilo para los títulos de productos */
+.product-card h5 {
+    font-size: 1.25rem;
+    margin-bottom: 10px;
+}
+
+/* Estilo para los párrafos de información del producto */
+.product-card p {
+    margin: 5px 0;
+}
+
+/* Estilo para el botón "Agregar al carrito" */
+.add-to-cart {
+    width: 100%;
+}
+
+/* Estilo para la paginación */
+.pagination {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.pagination button {
+    margin: 0 5px;
+    padding: 10px 15px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.pagination button:hover {
+    background-color: #0056b3;
+}
+
+.pagination span {
+    margin: 0 5px;
+    align-self: center;
+}
+

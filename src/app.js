@@ -4,7 +4,7 @@ import handlebars from 'express-handlebars';
 import config from './config/config.js';
 import productsRouter from './routes/products.router.js';
 import cartsRouter from './routes/cart.router.js';
-import { Server } from 'socket.io';
+import viewsRouter from './routes/views.router.js';
 import mongoose from 'mongoose';
 
 
@@ -18,6 +18,9 @@ app.engine('handlebars', handlebars.engine());
 app.set('views', `${config.DIRNAME}/views`);
 app.set('view engine', 'handlebars');
 
+//ruta de plantilla
+app.use('/views', viewsRouter);
+
 //rutas de api
 app.use('/api/cart', cartsRouter)
 app.use('/api/products', productsRouter)
@@ -29,11 +32,4 @@ app.use('/static', express.static(`${config.DIRNAME}/public`));
 const httpServer = app.listen(config.PORT, async () => {
     await mongoose.connect(config.MONGODB_URL);
     console.log(`Servidor corriendo en el puerto ${config.PORT}`);
-});
-
-const socketServer = new Server(httpServer);
-app.set('socketServer', socketServer);
-
-socketServer.on('connection', (socket) => {
-    console.log(`Nuevo cliente conectado con id ${socket.id}`);
 });

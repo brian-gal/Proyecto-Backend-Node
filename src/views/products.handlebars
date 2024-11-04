@@ -1,0 +1,90 @@
+<div class="container">
+    <div class="grid-container">
+        <!-- Div izquierdo para filtros -->
+        <div class="filters">
+            <h4>Filtros</h4>
+
+            <!-- Filtro por categoría -->
+            <div class="filter-category">
+                <h5>Categoría</h5>
+                <select id="category-filter" class="form-select" aria-label="Seleccione una categoría">
+                    <option value="">Todas</option>
+                    {{#each categories}}
+                    <option value="{{this}}">{{this}}</option>
+                    {{/each}}
+                </select>
+            </div>
+
+            <!-- Filtro por rango de precios -->
+            <div class="filter-price">
+                <h5>Rango de Precios</h5>
+                <input type="number" id="min-price" placeholder="Precio Mínimo" class="form-control" />
+                <input type="number" id="max-price" placeholder="Precio Máximo" class="form-control" />
+            </div>
+
+            <!-- Filtro por stock -->
+            <div class="filter-stock">
+                <h5>Disponibilidad</h5>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="in-stock" value="in-stock">
+                    <label class="form-check-label" for="in-stock">
+                        Solo mostrar en stock
+                    </label>
+                </div>
+            </div>
+
+            <!-- Filtro por orden de precios -->
+            <div class="filter-order">
+                <h5>Ordenar por Precio</h5>
+                <select id="order-filter" class="form-select" aria-label="Seleccione un orden">
+                    <option value="">Sin Ordenar</option>
+                    <option value="asc">Ascendente</option>
+                    <option value="desc">Descendente</option>
+                </select>
+            </div>
+
+            <!-- Botón para aplicar filtros -->
+            <button id="apply-filters" class="btn btn-primary">Aplicar Filtros</button>
+        </div>
+
+
+        <!-- Div derecho para la cuadrícula de productos -->
+        <div class="products">
+            <h2>Productos</h2>
+
+            <!-- Cuadrícula de productos -->
+            <div class="product-grid">
+                {{#each products.docs}}
+                <div class="product-card">
+                    <div class="product-info">
+                        <h5>{{this.title}}</h5>
+                        <p>{{this.description}}</p>
+                        <p>Precio: {{this.price}}</p>
+                        <p>Categoría: {{this.category}}</p>
+                        <p>Stock: {{this.stock}}</p>
+                        <button class="btn btn-primary add-to-cart" data-product-id="{{this._id}}">Agregar al
+                            carrito</button>
+                    </div>
+                </div>
+                {{/each}}
+            </div>
+
+            <!-- Paginación -->
+<div class="pagination">
+    {{#if products.hasPrevPage}}
+        <a href="/products?page={{products.prevPage}}" class="page-link">Anterior</a>
+    {{/if}}
+
+    
+
+    {{#if products.hasNextPage}}
+        <a href="/products?page={{products.nextPage}}" class="page-link">Siguiente</a>
+    {{/if}}
+</div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Enlaza tu archivo JS separado -->
+<script type="module" src="/static/js/products.js"></script>

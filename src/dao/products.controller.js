@@ -2,7 +2,7 @@ import productsModel from './models/products.model.js';
 import config from '../config/config.js';
 
 class productsController {
-    constructor() {}
+    constructor() { }
 
     //buscar por id
     getID = async (id) => {
@@ -14,36 +14,47 @@ class productsController {
     }
 
     // Buscar todos los productos y aplicar filtros
-getPaginated = async ({ limit, page, order, category, stock }) => {
-    try {
-        const pageNum = parseInt(page) || 1;
-        const limitNum = parseInt(limit) || config.ITEMS_PER_PAGE;
-        const sortOption = order === 'asc' ? 1 : order === 'desc' ? -1 : null;
+    getPaginated = async ({ limit, page, order, category, stock }) => {
+        try {
+            const pageNum = parseInt(page) || 1;
+            const limitNum = parseInt(limit) || config.ITEMS_PER_PAGE;
+            const sortOption = order === 'asc' ? 1 : order === 'desc' ? -1 : null;
 
-        // Filtro y opciones
-        const filter = {};
-        if (category) {
-            filter.category = category;  // Filtrar por categoría
-        }
-        if (stock === 'true') {
-            filter.stock = { $gt: 0 };  // Filtrar por productos disponibles (stock > 0)
-        }
+            // Filtro y opciones
+            const filter = {};
+            if (category) {
+                filter.category = category;  // Filtrar por categoría
+            }
+            if (stock === 'true') {
+                filter.stock = { $gt: 0 };  // Filtrar por productos disponibles (stock > 0)
+            }
 
-        const options = {
-            limit: limitNum,
-            page: pageNum,
-            lean: true,
-        };
-        if (sortOption !== null) {
-            options.sort = { price: sortOption }; 
-        }
+            const options = {
+                limit: limitNum,
+                page: pageNum,
+                lean: true,
+            };
+            if (sortOption !== null) {
+                options.sort = { price: sortOption };
+            }
 
-        // Ejecutar la consulta de paginación
-        return await productsModel.paginate(filter, options);
-    } catch (err) {
-        return err.message;
+            // Ejecutar la consulta de paginación
+            return await productsModel.paginate(filter, options);
+        } catch (err) {
+            return err.message;
+        }
+    };
+
+    // Obtener categorías únicas
+    getCategories = async () => {
+        try {
+            const products = await productsModel.find({}, 'category').lean();
+            const categories = [...new Set(products.map(product => product.category))];
+            return categories;
+        } catch (err) {
+            return err.message;
+        }
     }
-};
 
 
     // agregar un producto

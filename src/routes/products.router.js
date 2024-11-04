@@ -15,6 +15,14 @@ router.get('/', async (req, res) => {
     }
 });
 
+router.get('/categories', async (req, res) => {
+    try {
+        const categories = await controller.getCategories();
+        res.status(200).json({ data: categories });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
 
 
 // Obtener los productos por id

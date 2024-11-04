@@ -1,5 +1,4 @@
 import cartModel from './models/cart.model.js'; // Asegúrate de tener la ruta correcta
-import mongoose from 'mongoose';
 
 class cartController {
     // Constructor
