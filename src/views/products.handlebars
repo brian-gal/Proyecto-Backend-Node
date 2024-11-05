@@ -15,13 +15,6 @@
                 </select>
             </div>
 
-            <!-- Filtro por rango de precios -->
-            <div class="filter-price">
-                <h5>Rango de Precios</h5>
-                <input type="number" id="min-price" placeholder="Precio Mínimo" class="form-control" />
-                <input type="number" id="max-price" placeholder="Precio Máximo" class="form-control" />
-            </div>
-
             <!-- Filtro por stock -->
             <div class="filter-stock">
                 <h5>Disponibilidad</h5>
@@ -74,8 +67,9 @@
                         <p>Precio: {{this.price}}</p>
                         <p>Categoría: {{this.category}}</p>
                         <p>Stock: {{this.stock}}</p>
-                        <button class="btn btn-primary add-to-cart" data-product-id="{{this._id}}">Agregar al
-                            carrito</button>
+                        <button id="add-to-cart" class="btn btn-primary add-to-cart"
+                            data-product-id="{{this._id}}">Agregar
+                            alcarrito</button>
                     </div>
                 </div>
                 {{/each}}
@@ -84,13 +78,13 @@
             <!-- Paginación -->
             <div class="pagination">
                 {{#if products.hasPrevPage}}
-                <a href="/products?page={{products.prevPage}}" class="page-link">Anterior</a>
+                <a id="numberPrev" numberPrev="{{products.prevPage}}" class="page-link">Anterior</a>
                 {{/if}}
 
-
+                <p>{{products.page}} de {{products.totalPages}}</p>
 
                 {{#if products.hasNextPage}}
-                <a href="/products?page={{products.nextPage}}" class="page-link">Siguiente</a>
+                <a id="=numberNext" numberNext="{{products.nextPage}}" class="page-link">Siguiente</a>
                 {{/if}}
             </div>
 

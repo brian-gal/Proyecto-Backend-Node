@@ -22,7 +22,20 @@ router.get('/cart/:idCart', async (req, res) => {
 
 router.get('/products', async (req, res) => {
     try {
-        const productResponse = await fetch('http://localhost:8080/api/products');
+        const { limit, page, order, category, stock } = req.query;
+
+        const queryParams = new URLSearchParams();
+
+        if (limit) queryParams.append("limit", limit);
+        if (page) queryParams.append("page", page);
+        if (order) queryParams.append("order", order);
+        if (category) queryParams.append("category", category);
+        if (stock) queryParams.append("stock", stock);
+
+        // Construimos la URL completa con los parámetros
+        const apiUrl = `http://localhost:8080/api/products?${queryParams.toString()}`;
+
+        const productResponse = await fetch(apiUrl);
         const productData = await productResponse.json();
         const allProducts = productData.data;
 
@@ -33,7 +46,6 @@ router.get('/products', async (req, res) => {
         const cartResponse = await fetch('http://localhost:8080/api/cart');
         const cartData = await cartResponse.json();
         const cart = cartData.data;
-console.log(cart);
 
         res.status(200).render('products', { products: allProducts, categories: categories, cart: cart });
     } catch (err) {
