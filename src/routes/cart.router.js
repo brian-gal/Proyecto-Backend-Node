@@ -25,12 +25,12 @@ router.post('/', async (req, res) => {
     res.status(200).send({ error: null, data: newCart });
 });
 
-// Agregar un producto al carrito o actualizar el producto si ya existe
+// actualizar el producto si ya existe o lo agrega al carrito
 router.put('/:cid/products/:pid', async (req, res) => {
     const quantity = req.body.quantity || 1;
     const cartId = req.params.cid;
     const productId = req.params.pid;
-    const updatedCart = await controller.addProduct(cartId, productId, quantity);
+    const updatedCart = await controller.addUpdate(cartId, productId, quantity);
     res.status(200).send({ error: null, data: updatedCart });
 });
 

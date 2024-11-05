@@ -45,6 +45,18 @@
 
             <!-- Botón para aplicar filtros -->
             <button id="apply-filters" class="btn btn-primary">Aplicar Filtros</button>
+
+            <div>
+                <h5>Seleccione un carrito</h5>
+                <select class="form-select" name="cart-select" aria-label="Seleccione un carrito">
+                    {{#each cart}}
+                    <option class="cart-option" value="{{this._id}}">Carrito {{this.number}}</option>
+                    {{/each}}
+                </select>
+            </div>
+            <button id="open-cart" class="btn btn-primary">Abrir carrito</button>
+
+
         </div>
 
 
@@ -70,17 +82,17 @@
             </div>
 
             <!-- Paginación -->
-<div class="pagination">
-    {{#if products.hasPrevPage}}
-        <a href="/products?page={{products.prevPage}}" class="page-link">Anterior</a>
-    {{/if}}
+            <div class="pagination">
+                {{#if products.hasPrevPage}}
+                <a href="/products?page={{products.prevPage}}" class="page-link">Anterior</a>
+                {{/if}}
 
-    
 
-    {{#if products.hasNextPage}}
-        <a href="/products?page={{products.nextPage}}" class="page-link">Siguiente</a>
-    {{/if}}
-</div>
+
+                {{#if products.hasNextPage}}
+                <a href="/products?page={{products.nextPage}}" class="page-link">Siguiente</a>
+                {{/if}}
+            </div>
 
         </div>
     </div>

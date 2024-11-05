@@ -35,10 +35,10 @@ class cartController {
         }
     };
 
-    // Agregar un producto al carrito
-    addProduct = async (cartId, productId, quantity) => {
+    // Cambiar la cantidad de un producto en el carrito
+    addUpdate = async (cartId, productId, quantity) => {
         try {
-            //actualiza la cantidad si ya existe el producto
+            // Si el producto ya existe, actualizar la cantidad
             const updatedCart = await cartModel.findOneAndUpdate(
                 { _id: cartId, 'products._id': productId },
                 { $inc: { 'products.$.quantity': quantity } },
@@ -55,11 +55,11 @@ class cartController {
                 { $push: { products: { _id: productId, quantity: quantity } } },
                 { new: true }
             );
-
         } catch (err) {
             return { error: err.message }; // Retorna un objeto de error
         }
     };
+
 
     // Eliminar un producto del carrito
     deleteProduct = async (cartId, productId) => {

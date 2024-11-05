@@ -1,0 +1,34 @@
+<div class="cart">
+    <h1 class="cart-title" data-id="{{data._id}}">Carrito de compras</h1>
+
+    {{#if data.products}}
+    <div class="cart-items">
+        {{#each data.products}}
+        <div class="cart-item">
+            <div class="item-details">
+                <h3 class="item-title">{{this._id.title}}</h3>
+                <p class="item-description">{{this._id.description}}</p>
+                <p class="item-category">Categoría: {{this._id.category}}</p>
+                <p class="item-stock">Stock disponible: {{this._id.stock}}</p>
+            </div>
+
+            <div class="quantity-controls">
+                <button class="quantity-btn decrease-btn" data-id="{{this._id._id}}">-</button>
+                <span class="quantity" data-id="{{this._id._id}}">{{this.quantity}}</span>
+                <button class="quantity-btn increase-btn" data-id="{{this._id._id}}">+</button>
+            </div>
+
+            <div class="item-price">
+                <p>Precio c/u: ${{this._id.price}}</p>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+
+    {{else}}
+    <p class="empty-cart-message">El carrito está vacío.</p>
+    {{/if}}
+</div>
+
+<!-- Enlaza tu archivo JS separado -->
+<script type="module" src="/static/js/cart.js"></script>
