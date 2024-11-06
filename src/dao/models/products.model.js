@@ -6,7 +6,6 @@ mongoose.pluralize(null);
 
 const collection = config.PRODUCTS_COLLECTION;
 
-// Generamos esquema, acá colocaremos la estructura de datos que nos interesa manejar
 const schema = new mongoose.Schema({
     title: { type: String, required: true },
     description: { type: String, required: true },
@@ -17,7 +16,6 @@ const schema = new mongoose.Schema({
 
 schema.plugin(mongoosePaginate);
 
-// Generamos modelo
 const model = mongoose.model(collection, schema);
 
 export default model;

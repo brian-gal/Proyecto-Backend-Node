@@ -23,10 +23,10 @@ class productsController {
             // Filtro y opciones
             const filter = {};
             if (category) {
-                filter.category = category;  // Filtrar por categoría
+                filter.category = category;  
             }
             if (stock === 'true') {
-                filter.stock = { $gt: 0 };  // Filtrar por productos disponibles (stock > 0)
+                filter.stock = { $gt: 0 };  
             }
 
             const options = {
@@ -58,9 +58,9 @@ class productsController {
 
 
     // agregar un producto
-    add = async (data) => {
+    add = async ({ title, description, price, stock, category }) => {
         try {
-            return await productsModel.create(data);
+            return await productsModel.create({ title, description, price, stock, category });
         } catch (err) {
             return err.message;
         }

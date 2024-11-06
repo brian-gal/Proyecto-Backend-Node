@@ -6,7 +6,6 @@ mongoose.pluralize(null);
 const collection = config.CART_COLLECTION;
 const collectionProducts = config.PRODUCTS_COLLECTION;
 
-// Generamos esquema, acá colocaremos la estructura de datos que nos interesa manejar
 const schema = new mongoose.Schema({
     number: { type: Number, required: true },
     products: {
@@ -19,7 +18,6 @@ const schema = new mongoose.Schema({
     },
 });
 
-// Generamos modelo
 const model = mongoose.model(collection, schema);
 
 export default model;

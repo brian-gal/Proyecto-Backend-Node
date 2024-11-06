@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import productsController from '../dao/products.controller.js'; // Asegúrate de importar tu controlador
+import productsController from '../dao/products.controller.js'; 
 
 const router = Router();
 const controller = new productsController();
