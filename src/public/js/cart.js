@@ -23,6 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
         button.addEventListener("click", () => {
             const productId = button.getAttribute("data-id");
             deleteProduct(productId, cartId);
+            deleteProductFromDOM(productId)
         });
     });
 });
@@ -38,6 +39,18 @@ async function deleteProduct(productId, cartId) {
 
     } catch (error) {
         console.error("Error al eliminar el producto del carrito:", error);
+    }
+}
+
+
+function deleteProductFromDOM(productId) {
+
+    const productElement = document.querySelector(`#product-${productId}`);
+
+    if (productElement) {
+        console.log(productId)
+
+        productElement.remove();
     }
 }
 

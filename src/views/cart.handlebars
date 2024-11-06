@@ -4,7 +4,7 @@
     {{#if data.products}}
     <div class="cart-items">
         {{#each data.products}}
-        <div class="cart-item">
+        <div class="cart-item" id="product-{{this._id._id}}">
             <div class="item-details">
                 <h3 class="item-title">{{this._id.title}}</h3>
                 <p class="item-description">{{this._id.description}}</p>
