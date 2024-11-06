@@ -27,7 +27,7 @@ El servidor se ejecuta en el puerto `8080`. Puedes cambiar el puerto en el archi
 
 ### Rutas de Carritos
 
-- **GET** `/api/carts`  
+- **GET** `/api/cart`  
   Obtiene todos los carritos disponibles.
 
 - **GET** `/api/carts/:cid`  
@@ -36,13 +36,16 @@ El servidor se ejecuta en el puerto `8080`. Puedes cambiar el puerto en el archi
 - **POST** `/api/carts`  
   Crea un nuevo carrito.
 
-- **PUT** `/api/carts/:cid/products/:pid`  
-  Agrega un producto a un carrito específico por ID de carrito y ID de producto. Si el producto ya existe, actualiza su cantidad.
+- **PUT** `/api/cart/:cid/products/:pid`  
+  actualiza su cantidad.
 
-- **DELETE** `/api/carts/:cid/products/:pid`  
+  - **PUT** `/api/cart/:cid`  
+  Agrega un producto al carrito.
+
+- **DELETE** `/api/cart/:cid/products/:pid`  
   Elimina un producto específico del carrito por ID de carrito y ID de producto.
 
-- **DELETE** `/api/carts/:cid`  
+- **DELETE** `/api/cart/:cid`  
   Elimina todos los productos del carrito por ID de carrito.
 
 ### Notas Adicionales
@@ -52,8 +55,8 @@ El servidor se ejecuta en el puerto `8080`. Puedes cambiar el puerto en el archi
 
 ## Rutas de Vistas
 
-- **GET** `/views/cart`  
-  Renderiza todos los productos del carrito actual y actualiza en tiempo real los productos agregados o eliminados.
+- **GET** `/views/cart/:idCart`
+  Renderiza todos los productos del carrito actual.
 
 - **GET** `/views/products`  
   Renderiza todos los productos disponibles.

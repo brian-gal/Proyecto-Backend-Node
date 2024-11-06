@@ -2,7 +2,7 @@ import { Router } from 'express';
 
 const router = Router();
 
-// Renderizar la vista de la página de inicio con los productos
+
 router.get('/cart/:idCart', async (req, res) => {
     const idCart = req.params.idCart;
 
@@ -11,7 +11,6 @@ router.get('/cart/:idCart', async (req, res) => {
         const productData = await productResponse.json();
         const cart = productData.data;
 
-        // Renderiza la vista 'cart' y pasa el objeto 'cart' como contexto
         res.status(200).render('cart', { data: cart });
     } catch (err) {
         console.error("Error al obtener los productos:", err);
@@ -32,7 +31,6 @@ router.get('/products', async (req, res) => {
         if (category) queryParams.append("category", category);
         if (stock) queryParams.append("stock", stock);
 
-        // Construimos la URL completa con los parámetros
         const apiUrl = `http://localhost:8080/api/products?${queryParams.toString()}`;
 
         const productResponse = await fetch(apiUrl);

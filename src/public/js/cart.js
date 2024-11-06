@@ -18,7 +18,28 @@ document.addEventListener("DOMContentLoaded", () => {
             decreaseQuantity(productId, cartId);
         });
     });
+
+    document.querySelectorAll(".delete-btn").forEach(button => {
+        button.addEventListener("click", () => {
+            const productId = button.getAttribute("data-id");
+            deleteProduct(productId, cartId);
+        });
+    });
 });
+
+async function deleteProduct(productId, cartId) {
+    try {
+        const response = await fetch(`/api/cart/${cartId}/products/${productId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+
+    } catch (error) {
+        console.error("Error al eliminar el producto del carrito:", error);
+    }
+}
 
 async function decreaseQuantity(productId, cartId) {
     try {
@@ -27,7 +48,7 @@ async function decreaseQuantity(productId, cartId) {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ quantity: -1 }) 
+            body: JSON.stringify({ quantity: -1 })
         });
 
         if (response.ok) {

@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const numberNext = document.getElementById("numberNext")
     const numberPrev = document.getElementById("numberPrev")
 
+    //cambia la pagina siguiente
     if (numberNext) {
         numberNext.addEventListener("click", () => {
             const currentUrl = new URL(window.location.href);
@@ -17,7 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-
+    //cambia la pagina anterior
     if (numberPrev) {
         numberPrev.addEventListener("click", () => {
             const currentUrl = new URL(window.location.href);
@@ -29,6 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    // Filtros de productos
     applyFilters.addEventListener("click", () => {
         const categoryFilter = document.getElementById("category-filter");
         const orderFilter = document.getElementById("order-filter");
@@ -52,29 +54,30 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
+    // boton para abrir el carrito
     cartButton.addEventListener("click", () => {
-
         const cartId = cartSelectElement.value;
         if (cartId) {
-            window.location.href = `/views/cart/${cartId}`; // Redirige a la vista del carrito
+            window.location.href = `/views/cart/${cartId}`;
         } else {
             console.error("No se encontró el cartId");
         }
     });
 
+    //boton para agregar producto al carrito
     addToCartButtons.forEach(button => {
         button.addEventListener("click", async () => {
             const productId = button.getAttribute("data-product-id");
             const cartId = cartSelectElement.value;
-
+            let quantity = 1;
             try {
-                const productResponse = await fetch(`http://localhost:8080/api/cart/${cartId}/products/${productId}`, {
-                    method: "PUT"
+                const productResponse = await fetch(`http://localhost:8080/api/cart/${cartId}`, {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ productId, quantity })
                 });
-                const productData = await productResponse.json();
-
-                // Manejar la respuesta, por ejemplo, mostrar un mensaje al usuario
-                console.log("Producto agregado al carrito:", productData);
             } catch (err) {
                 console.error("Error al agregar al carrito:", err);
             }

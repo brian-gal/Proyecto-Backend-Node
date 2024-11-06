@@ -1,7 +1,6 @@
-import cartModel from './models/cart.model.js'; // Asegúrate de tener la ruta correcta
+import cartModel from './models/cart.model.js';
 
 class cartController {
-    // Constructor
     constructor() { }
 
     // Obtener todos los carritos
@@ -35,8 +34,9 @@ class cartController {
         }
     };
 
-    // Cambiar la cantidad de un producto en el carrito
-    addUpdate = async (cartId, productId, quantity) => {
+    // Agrega un producto al carrito
+    add = async (cartId, productId, quantity) => {
+
         try {
             // Si el producto ya existe, actualizar la cantidad
             const updatedCart = await cartModel.findOneAndUpdate(
@@ -55,8 +55,22 @@ class cartController {
                 { $push: { products: { _id: productId, quantity: quantity } } },
                 { new: true }
             );
+        } catch (error) {
+            console.error("Error al agregar al carrito:", error);
+        }
+    }
+
+    // Cambiar la cantidad de un producto en el carrito
+    addUpdate = async (cartId, productId, quantity) => {
+        try {
+            return await cartModel.findOneAndUpdate(
+                { _id: cartId, 'products._id': productId },
+                { $inc: { 'products.$.quantity': quantity } },
+                { new: true }
+            );
+
         } catch (err) {
-            return { error: err.message }; // Retorna un objeto de error
+            return { error: err.message };
         }
     };
 
@@ -74,15 +88,18 @@ class cartController {
         }
     };
 
-    // Eliminar todos los productos del carrito
+    // Eliminar todos los productos del carrito 
     deleteAllProducts = async (cartId) => {
         try {
-            return await cartModel.findByIdAndDelete(cartId);
+            return await cartModel.findByIdAndUpdate(
+                cartId,
+                { $set: { products: [] } },
+                { new: true }
+            );
         } catch (err) {
             return { error: err.message };
         }
     };
-
 
 
 }

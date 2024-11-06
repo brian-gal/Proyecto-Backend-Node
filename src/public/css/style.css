@@ -103,10 +103,6 @@ body {
     cursor: pointer;
 }
 
-.pagination button:hover {
-    background-color: #0056b3;
-}
-
 .pagination span {
     margin: 0 5px;
     align-self: center;
@@ -143,6 +139,7 @@ body {
     padding: 15px;
     border-bottom: 1px solid #eee;
     transition: background-color 0.2s;
+    gap: 10px;
 }
 
 .item-details {
