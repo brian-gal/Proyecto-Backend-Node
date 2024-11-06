@@ -3,7 +3,31 @@ document.addEventListener("DOMContentLoaded", () => {
     const applyFilters = document.getElementById("apply-filters");
     const addToCartButtons = document.querySelectorAll(".add-to-cart");
     const cartSelectElement = document.querySelector('select[name="cart-select"]');
+    const numberNext = document.getElementById("numberNext")
+    const numberPrev = document.getElementById("numberPrev")
 
+    if (numberNext) {
+        numberNext.addEventListener("click", () => {
+            const currentUrl = new URL(window.location.href);
+            const queryParams = new URLSearchParams(currentUrl.search);
+            const pagSiguiente = numberNext.getAttribute("numberNext");
+            queryParams.set("page", pagSiguiente);
+            const newUrl = `${currentUrl.pathname}?${queryParams.toString()}`;
+            window.location.href = newUrl;
+        });
+    }
+
+
+    if (numberPrev) {
+        numberPrev.addEventListener("click", () => {
+            const currentUrl = new URL(window.location.href);
+            const queryParams = new URLSearchParams(currentUrl.search);
+            const pagAnterior = numberPrev.getAttribute("numberPrev");
+            queryParams.set("page", pagAnterior);
+            const newUrl = `${currentUrl.pathname}?${queryParams.toString()}`;
+            window.location.href = newUrl;
+        });
+    }
 
     applyFilters.addEventListener("click", () => {
         const categoryFilter = document.getElementById("category-filter");

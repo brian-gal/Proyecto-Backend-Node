@@ -78,13 +78,13 @@
             <!-- Paginación -->
             <div class="pagination">
                 {{#if products.hasPrevPage}}
-                <a id="numberPrev" numberPrev="{{products.prevPage}}" class="page-link">Anterior</a>
+                <button id="numberPrev" class="page-link" numberPrev="{{products.prevPage}}">Anterior</button>
                 {{/if}}
 
                 <p>{{products.page}} de {{products.totalPages}}</p>
 
                 {{#if products.hasNextPage}}
-                <a id="=numberNext" numberNext="{{products.nextPage}}" class="page-link">Siguiente</a>
+                <button id="numberNext" class="page-link" numberNext="{{products.nextPage}}">Siguiente</button>
                 {{/if}}
             </div>
 
