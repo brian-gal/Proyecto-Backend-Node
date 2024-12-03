@@ -39,7 +39,7 @@ El servidor se ejecuta en el puerto `8080`. Puedes cambiar el puerto en el archi
 - **PUT** `/api/cart/:cid/products/:pid`  
   actualiza su cantidad.
 
-  - **PUT** `/api/cart/:cid`  
+- **PUT** `/api/cart/:cid`  
   Agrega un producto al carrito.
 
 - **DELETE** `/api/cart/:cid/products/:pid`  

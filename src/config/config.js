@@ -6,7 +6,8 @@ const config = {
     MONGODB_URL: 'mongodb+srv://coder70275:1234@cluster0.p43o0.mongodb.net/coder70275',
     ITEMS_PER_PAGE: 10,
     PRODUCTS_COLLECTION: "products",
-    CART_COLLECTION: "cart"
+    CART_COLLECTION: "cart",
+    USERS_COLLECTION: "users"
 };
 
 export default config
