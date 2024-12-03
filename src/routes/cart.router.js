@@ -60,7 +60,7 @@ router.delete('/:cid/products/:pid', async (req, res) => {
     }
 });
 
-// Eliminar todos los productos del carrito al borrar el carrito
+// Eliminar todos los productos del carrito 
 router.delete('/:cid', async (req, res) => {
     const cartId = req.params.cid;
     const updatedCart = await controller.deleteAllProducts(cartId);

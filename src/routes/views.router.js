@@ -1,16 +1,17 @@
 import { Router } from 'express';
+import cartsController from '../dao/cart.controller.js';
+import productsController from '../dao/products.controller.js'; 
 
 const router = Router();
+const controllerCart = new cartsController();
+const controllerProducts = new productsController();
 
-
+//vista de carrito
 router.get('/cart/:idCart', async (req, res) => {
     const idCart = req.params.idCart;
 
     try {
-        const productResponse = await fetch('http://localhost:8080/api/cart/' + idCart);
-        const productData = await productResponse.json();
-        const cart = productData.data;
-
+        const cart = await controllerCart.getId(idCart);
         res.status(200).render('cart', { data: cart });
     } catch (err) {
         console.error("Error al obtener los productos:", err);
@@ -18,32 +19,19 @@ router.get('/cart/:idCart', async (req, res) => {
     }
 });
 
-
+//vista de productos
 router.get('/products', async (req, res) => {
     try {
         const { limit, page, order, category, stock } = req.query;
 
-        const queryParams = new URLSearchParams();
+        //carga la lista de productos
+        const allProducts = await controllerProducts.getPaginated({ limit, page, order, category, stock });
 
-        if (limit) queryParams.append("limit", limit);
-        if (page) queryParams.append("page", page);
-        if (order) queryParams.append("order", order);
-        if (category) queryParams.append("category", category);
-        if (stock) queryParams.append("stock", stock);
-
-        const apiUrl = `http://localhost:8080/api/products?${queryParams.toString()}`;
-
-        const productResponse = await fetch(apiUrl);
-        const productData = await productResponse.json();
-        const allProducts = productData.data;
-
-        const categoryResponse = await fetch('http://localhost:8080/api/products/categories');
-        const categoryData = await categoryResponse.json();
-        const categories = categoryData.data;
-
-        const cartResponse = await fetch('http://localhost:8080/api/cart');
-        const cartData = await cartResponse.json();
-        const cart = cartData.data;
+        //carga la lista de categorias
+        const categories = await controllerProducts.getCategories();
+        
+        //carga la lista de carritos disponibles
+        const cart = await controllerCart.get();
 
         res.status(200).render('products', { products: allProducts, categories: categories, cart: cart });
     } catch (err) {

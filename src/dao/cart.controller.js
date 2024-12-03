@@ -15,7 +15,7 @@ class cartController {
 
     getId = async (id) => {
         try {
-            return await cartModel.findById(id).populate('products._id').lean();
+            return await cartModel.findById(id).populate('products._id').lean(); 
         }
         catch (err) {
             return err.message;
