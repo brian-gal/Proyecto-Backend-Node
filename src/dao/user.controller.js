@@ -1,57 +1,51 @@
-import userModel from './models/user.model.js';
+const users = [
+    {
+        username: "juan",
+        password: "123456",
+        admin: true,
+    },
+    {
+        username: "jose",
+        password: "1234",
+        admin: false,
+    },
+];
 
-class userController {
-    constructor() { }
+export const login = (req, res) => {
 
-    // Obtener todos los usuarios
-    get = async () => {
-        try {
-            return await userModel.find({}).select('_id first_name last_name email age password role').lean();
-        }
-        catch (err) {
-            return err.message;
-        }
+
+    const { username, password } = req.body;
+    const index = users.findIndex(
+        (user) => user.username === username && user.password === password
+    );
+    if (index < 0) res.status(401).json({ msg: "Credenciales incorrectas" });
+    else {
+        const user = users[index];
+        req.session.info = {
+            loggedIn: true,
+            count: 1,
+            username: user.username,
+            admin: user.admin,
+        };
+
+        //req.session.leggedIn = true
+        //req.session.admin = user.admin
+        res.json({ msg: "bienvenido!" });
     }
+};
 
-    getId = async (id) => {
-        try {
-            return await userModel.findById(id).lean();
-        }
-        catch (err) {
-            return err.message;
-        }
-    }
+export const secretEndpoint = (req, res) => {
+    req.session.info.count++;
+    res.json({
+        msg: "endpoint secreto",
+        contador: req.session.info.count,
+        session: req.session,
+        sessionId: req.sessionID,
+        cookies: req.cookies
+    });
+};
 
-    //crear un nuevo usuario
-    add = async ({ first_name, last_name, email, age, password, role }) => {
-        try {
-            return await userModel.create({ first_name, last_name, email, age, password, role });
-        }
-        catch (err) {
-            return err.message;
-        }
-    }
-
-    //actualizar un usuario
-    update = async (id, updateData) => {
-        try {
-            return await userModel.findOneAndUpdate({ _id: id }, updateData, { new: true });
-        }
-        catch (err) {
-            return err.message;
-        }
-    }
-
-    // eliminar un usuario
-    delete = async (id) => {
-        try {
-            return await userModel.findOneAndDelete({ _id: id });
-        }
-        catch (err) {
-            return err.message;
-        }
-    }
-
-}
-
-export default userController;
+export const logout = (req, res) => {
+    req.session.destroy();
+    res.json({ msg: "logout ok" });
+};

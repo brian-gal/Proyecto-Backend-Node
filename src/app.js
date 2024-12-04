@@ -1,17 +1,37 @@
 import express from 'express';
+import session from "express-session";
 import handlebars from 'express-handlebars';
-
+import cookieParser from "cookie-parser";
 import config from './config/config.js';
 import productsRouter from './routes/products.router.js';
 import cartsRouter from './routes/cart.router.js';
 import viewsRouter from './routes/views.router.js';
+import userRouter from './routes/user.router.js';
 import mongoose from 'mongoose';
+import MongoStore from "connect-mongo";
 
 
 const app = express();
 
+const mongoStoreConfig = {
+  store: MongoStore.create({
+    mongoUrl: config.MONGODB_URL,
+    // crypto: {
+    //   secret: '1234'
+    // },
+    ttl: 60,
+  }),
+  secret: "1234",
+  cookie: { maxAge: 60000 },
+  saveUninitialized: true,
+  resave: false,
+};
+
+app.use(session(mongoStoreConfig));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 // Configuración Handlebars
 app.engine('handlebars', handlebars.engine());
@@ -24,12 +44,13 @@ app.use('/views', viewsRouter);
 //rutas de api
 app.use('/api/cart', cartsRouter)
 app.use('/api/products', productsRouter)
+app.use("/api", userRouter);
 
 //contenido estatico
 app.use('/static', express.static(`${config.DIRNAME}/public`));
 
 //corriendo el servidor
 const httpServer = app.listen(config.PORT, async () => {
-    await mongoose.connect(config.MONGODB_URL);
-    console.log(`Servidor corriendo en el puerto ${config.PORT}`);
+  await mongoose.connect(config.MONGODB_URL);
+  console.log(`Servidor corriendo en el puerto ${config.PORT}`);
 });
