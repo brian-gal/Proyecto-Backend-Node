@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import cartsController from '../dao/cart.controller.js';
-import productsController from '../dao/products.controller.js'; 
+import productsController from '../dao/products.controller.js';
 
 const router = Router();
 const controllerCart = new cartsController();
@@ -29,7 +29,7 @@ router.get('/products', async (req, res) => {
 
         //carga la lista de categorias
         const categories = await controllerProducts.getCategories();
-        
+
         //carga la lista de carritos disponibles
         const cart = await controllerCart.get();
 
@@ -40,13 +40,12 @@ router.get('/products', async (req, res) => {
     }
 });
 
-//vista login 
-router.get("/login", (req, res)=>{
-    res.render('login')
+router.get("/login", (req, res) => {
+    res.status(200).render("login");
 });
 
-router.get("/register", (req, res)=>{
-    res.render('register')
+router.get("/register", (req, res) => {
+    res.status(200).render("register");
 });
 
 export default router;

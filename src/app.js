@@ -24,7 +24,7 @@ const mongoStoreConfig = {
   secret: "1234",
   cookie: { maxAge: 60000 },
   saveUninitialized: true,
-  resave: false,
+  resave: true,
 };
 
 app.use(session(mongoStoreConfig));
@@ -44,7 +44,9 @@ app.use('/views', viewsRouter);
 //rutas de api
 app.use('/api/cart', cartsRouter)
 app.use('/api/products', productsRouter)
-app.use("/api", userRouter);
+
+//rutas de usuario
+app.use("/api/user", userRouter);
 
 //contenido estatico
 app.use('/static', express.static(`${config.DIRNAME}/public`));
