@@ -5,19 +5,30 @@ const router = Router();
 router.post("/register", async (req, res) => {
     try {
         const newUser = await userManager.register(req.body);;
-        return res.redirect("/views/login");
+        if (!newUser) {
+            return res.render("error", { error: "el usuario ya existe" });
+        } else {
+            return res.redirect("/views/login");
+        }
     } catch (error) {
-        res.render("error", { error });
+        console.log(error);
     }
 });
 
 router.post("/login", async (req, res) => {
-    const { email, password } = req.body;
-    const user = await userManager.login(email, password);
-    if (user) {
-        req.session.email = email;
-        res.render("home");
-    } else res.redirect("error", { message: "credenciales incorrectas" });
+    try {
+        const { email, password } = req.body;
+        const user = await userManager.login(email, password);
+        if (!user) {
+            return res.render("error", { error: "Usuario o contraseña incorrectos" });
+        } else {
+            req.session.email = email;
+            return res.render("home");
+        }
+    } catch (error) {
+        console.log(error);
+    }
+
 });
 
 export default router;
