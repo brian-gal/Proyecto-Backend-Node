@@ -9,7 +9,9 @@ import viewsRouter from './routes/views.router.js';
 import userRouter from './routes/user.router.js';
 import mongoose from 'mongoose';
 import MongoStore from "connect-mongo";
-
+import { errorHandler } from "./middlewares/errorHandler.js";
+import passport from "passport";
+import './auth/local-strategy.js';
 
 const app = express();
 
@@ -33,11 +35,15 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
+app.use(passport.initialize());
+app.use(passport.session());
+
 // Configuración Handlebars
 app.engine('handlebars', handlebars.engine());
 app.set('views', `${config.DIRNAME}/views`);
 app.set('view engine', 'handlebars');
 
+app.use(errorHandler);
 //ruta de plantilla
 app.use('/views', viewsRouter);
 
