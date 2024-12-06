@@ -16,9 +16,9 @@ const app = express();
 const mongoStoreConfig = {
   store: MongoStore.create({
     mongoUrl: config.MONGODB_URL,
-    // crypto: {
-    //   secret: '1234'
-    // },
+    crypto: {
+      secret: config.CRYPTO_SECRET,
+    },
     ttl: 60,
   }),
   secret: "1234",

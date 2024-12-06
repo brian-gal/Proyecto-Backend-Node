@@ -23,10 +23,10 @@ router.post("/login", async (req, res) => {
             return res.render("error", { error: "Usuario o contraseña incorrectos" });
         } else {
             req.session.email = email;
-            return res.render("home");
+            return res.redirect("/views/products");
         }
     } catch (error) {
-        console.log(error);
+        return res.render("error", { error: error.message });
     }
 
 });

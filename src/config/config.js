@@ -7,7 +7,8 @@ const config = {
     ITEMS_PER_PAGE: 10,
     PRODUCTS_COLLECTION: "products",
     CART_COLLECTION: "cart",
-    USERS_COLLECTION: "users"
+    USERS_COLLECTION: "users",
+    CRYPTO_SECRET: "1234",
 };
 
 export default config
