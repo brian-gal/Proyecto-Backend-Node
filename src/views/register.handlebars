@@ -1,11 +1,15 @@
-<h1>Register</h1>
+<h1 class="registro-titulo">Registrarse</h1>
 
-<form action="/api/user/register" method="post">
-    <label for="first_name">FirstName</label>
+<form class="registro-form" action="/api/user/register" method="post">
+    <label for="first_name">Nombre</label>
     <input type="text" name="first_name" />
-    <label for="last_name">lastname</label><input type="text" name="last_name" />
-    <label for="email">email</label><input type="email" name="email" />
-    <label for="age">age</label><input type="number" name="age" />
-    <label for="password">password</label><input type="password" name="password" />
+    <label for="last_name">Apellido</label>
+    <input type="text" name="last_name" />
+    <label for="email">Email</label>
+    <input type="email" name="email" />
+    <label for="age">Edad</label>
+    <input type="number" name="age" />
+    <label for="password">Clave</label>
+    <input type="password" name="password" />
     <input type="submit" value="REGISTER" />
 </form>

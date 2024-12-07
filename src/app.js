@@ -44,6 +44,7 @@ app.set('views', `${config.DIRNAME}/views`);
 app.set('view engine', 'handlebars');
 
 app.use(errorHandler);
+
 //ruta de plantilla
 app.use('/views', viewsRouter);
 
@@ -58,7 +59,7 @@ app.use("/api/user", userRouter);
 app.use('/static', express.static(`${config.DIRNAME}/public`));
 
 //corriendo el servidor
-const httpServer = app.listen(config.PORT, async () => {
+app.listen(config.PORT, async () => {
   await mongoose.connect(config.MONGODB_URL);
   console.log(`Servidor corriendo en el puerto ${config.PORT}`);
 });

@@ -1,7 +1,11 @@
-<form action="/api/user/login" method="post">
-    <label>Email:<input type="text" name="email" /></label>
-    <label>Password:<input type="text" name="password" /></label>
+<h1 class="login-titulo">Iniciar Sesion</h1>
+
+<form class="login-form" action="/api/user/login" method="post">
+    <label for="email">Email:</label>
+    <input type="text" name="email" />
+    <label for="password">Clave:</label>
+    <input type="password" name="password" />
     <input type="submit" value="LOGIN" />
 </form>
 
-<button onclick="location.href='/views/register'">REGISTER NOW</button>
+<button class="login-register-btn" onclick="location.href='/views/register'">REGISTER NOW</button>
