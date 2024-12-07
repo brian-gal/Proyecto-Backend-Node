@@ -8,7 +8,7 @@ const config = {
     PRODUCTS_COLLECTION: "products",
     CART_COLLECTION: "cart",
     USERS_COLLECTION: "users",
-    CRYPTO_SECRET: "1234",
+    SECRET_KEY: "1234",
 };
 
 export default config

@@ -11,7 +11,7 @@ import mongoose from 'mongoose';
 import MongoStore from "connect-mongo";
 import { errorHandler } from "./middlewares/errorHandler.js";
 import passport from "passport";
-import './auth/local-strategy.js';
+import './auth/jwt.js';
 
 const app = express();
 
@@ -19,7 +19,7 @@ const mongoStoreConfig = {
   store: MongoStore.create({
     mongoUrl: config.MONGODB_URL,
     crypto: {
-      secret: config.CRYPTO_SECRET,
+      secret: config.SECRET_KEY,
     },
     ttl: 60,
   }),

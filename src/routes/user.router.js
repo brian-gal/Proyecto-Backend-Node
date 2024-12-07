@@ -1,14 +1,15 @@
 import { Router } from "express";
-import { registerResponse, loginResponse } from "../controllers/user.controller.js";
-import passport from "passport";
-import { isAuth } from "../middlewares/isAuth.js";
+import { register, login, privateData } from "../controllers/user.controller.js";
+import { checkAuthCookies} from "../middlewares/checkAuth.js";
 
 const router = Router();
 
-router.post("/register", passport.authenticate("register"), registerResponse);
+router.post("/register", register);
 
-router.post("/login", passport.authenticate("login"), loginResponse);
+router.post("/login", login);
 
-router.get("/private", isAuth, (req, res) => res.send("ruta privada"));
+router.get("/private-cookies", checkAuthCookies, privateData);
+
+
 
 export default router;
