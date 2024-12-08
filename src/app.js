@@ -11,6 +11,7 @@ import mongoose from 'mongoose';
 import MongoStore from "connect-mongo";
 import { errorHandler } from "./middlewares/errorHandler.js";
 import passport from "passport";
+import { checkAuthCookies } from './middlewares/checkAuthCookies.js';
 import './auth/jwt.js';
 
 const app = express();
@@ -53,7 +54,12 @@ app.use('/api/cart', cartsRouter)
 app.use('/api/products', productsRouter)
 
 //rutas de usuario
-app.use("/api/user", userRouter);
+app.use("/api/sessions", userRouter);
+
+// Ruta privada que requiere autenticación
+app.use('/api/private', checkAuthCookies, (req, res) => {
+  res.json({ message: "Acceso permitido, token válido." });
+});
 
 //contenido estatico
 app.use('/static', express.static(`${config.DIRNAME}/public`));

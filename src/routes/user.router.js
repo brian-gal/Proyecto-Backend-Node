@@ -1,15 +1,16 @@
-import { Router } from "express";
-import { register, login, privateData } from "../controllers/user.controller.js";
-import { checkAuthCookies} from "../middlewares/checkAuth.js";
+import express from 'express';
+import { login, register, privateData } from '../controllers/user.controller.js';
+import { checkAuthCookies } from '../middlewares/checkAuthCookies.js';  // Importar el middleware
 
-const router = Router();
+const router = express.Router();
 
-router.post("/register", register);
+// Ruta de registro de usuario
+router.post('/register', register);
 
-router.post("/login", login);
+// Ruta de login de usuario
+router.post('/login', login);
 
-router.get("/private-cookies", checkAuthCookies, privateData);
-
-
+// Ruta de datos privados que requiere autenticación
+router.get('/current', checkAuthCookies('current'), privateData);
 
 export default router;

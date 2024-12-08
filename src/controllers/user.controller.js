@@ -1,5 +1,4 @@
-import { generateToken } from "../auth/jwt.js";
-import * as services from "../services/user.services.js";
+import * as services from '../services/user.services.js';
 
 export const register = async (req, res, next) => {
     try {
@@ -13,8 +12,8 @@ export const register = async (req, res, next) => {
 export const login = async (req, res, next) => {
     try {
         const user = await services.login(req.body);
-        const token = generateToken(user);
-        res.cookie('token', token, { httpOnly: true }).json({ message: 'Login OK' });
+        const token = services.generateToken(user);
+        res.cookie('token', token, { httpOnly: true }).json({ message: 'Login OK', token });
     } catch (error) {
         next(error);
     }

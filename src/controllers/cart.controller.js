@@ -15,7 +15,7 @@ class cartController {
 
     getId = async (id) => {
         try {
-            return await cartModel.findById(id).populate('products._id').lean(); 
+            return await cartModel.findById(id).populate('products._id').lean();
         }
         catch (err) {
             return err.message;
@@ -27,12 +27,13 @@ class cartController {
         try {
             const Carts = await this.get();  // Obtener los carritos existentes
             const newNumber = Carts.length + 1;
-            return await cartModel.create({ number: newNumber, products: [] });
-        }
-        catch (err) {
+            const newCart = await cartModel.create({ number: newNumber, products: [] });
+            return newCart._id;
+        } catch (err) {
             return err.message;
         }
     };
+
 
     // Agrega un producto al carrito
     add = async (cartId, productId, quantity) => {

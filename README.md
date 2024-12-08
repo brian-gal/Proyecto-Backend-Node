@@ -8,6 +8,17 @@ El servidor se ejecuta en el puerto `8080`. Puedes cambiar el puerto en el archi
 
 ## Rutas de la API
 
+### Rutas de Usuario
+
+- **POST** `/api/sessions/register`  
+  Registra un nuevo usuario.
+
+- **POST** `/api/sessions/login`
+  Envía credenciales para iniciar sesión.
+
+- **GET** `/api/sessions/recurrent`
+  Obtiene los datos del usuario en formato JSON.
+
 ### Rutas de Productos
 
 - **GET** `/api/products`  
@@ -60,5 +71,12 @@ El servidor se ejecuta en el puerto `8080`. Puedes cambiar el puerto en el archi
 
 - **GET** `/views/products`  
   Renderiza todos los productos disponibles.
+
+
+- **GET** `/views/register`  
+  Renderiza el formulario de registro.
+
+- **GET** `/views/login`  
+  Renderiza el formulario de login.
 
 
