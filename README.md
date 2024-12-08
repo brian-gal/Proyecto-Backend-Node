@@ -11,13 +11,13 @@ El servidor se ejecuta en el puerto `8080`. Puedes cambiar el puerto en el archi
 ### Rutas de Usuario
 
 - **POST** `/api/sessions/register`  
-  Registra un nuevo usuario.
+  Registra un nuevo usuario y crea un carrito para el usuario y guarda el id del carrito en la propiedad `cart` del usuario.
 
 - **POST** `/api/sessions/login`
   Envía credenciales para iniciar sesión.
 
-- **GET** `/api/sessions/recurrent`
-  Obtiene los datos del usuario en formato JSON.
+- **GET** `/api/sessions/current`
+  Obtiene los datos del usuario en formato JSON si es que está autenticado.
 
 ### Rutas de Productos
 
